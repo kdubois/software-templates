@@ -127,38 +127,11 @@ spec:
         - name: maven-settings
           workspace: maven-settings
     - name: test
-      params:
-      - name: MAVEN_IMAGE
-        value: 'registry.redhat.io/ubi9/openjdk-21:latest'
-      - name: GOALS
-        value:
-          - -DskipTests
-          - test 
-      - name: MAVEN_MIRROR_URL
-        value: ''
-      - name: SERVER_USER
-        value: ''
-      - name: SERVER_PASSWORD
-        value: ''
-      - name: PROXY_USER
-        value: ''
-      - name: PROXY_PASSWORD
-        value: ''
-      - name: PROXY_PORT
-        value: ''
-      - name: PROXY_HOST
-        value: ''
-      - name: PROXY_NON_PROXY_HOSTS
-        value: ''
-      - name: PROXY_PROTOCOL
-        value: http
-      - name: CONTEXT_DIR
-        value: .
       runAfter:
         - package
       taskRef:
-        kind: ClusterTask
-        name: maven
+        kind: Task
+        name: test-app
       workspaces:
         - name: source
           workspace: source-folder

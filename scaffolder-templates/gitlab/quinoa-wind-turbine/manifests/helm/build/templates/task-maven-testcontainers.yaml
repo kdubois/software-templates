@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+    name: test-app
+spec:
+    workspaces:
+        - name: source
+        - name: maven-settings
+    steps:
+        - name: build
+          image: "registry.redhat.io/ubi9/openjdk-21:latest"
+          env:
+              - name: TC_CLOUD_TOKEN
+                valueFrom:
+                    secretKeyRef:
+                        name: tcc-token
+                        key: token
+          script: |
+              set -e
+              cd "$(workspaces.source.path)"
+              sh -c "$(curl -fsSL https://get.testcontainers.cloud/bash)"
+              mvn test
