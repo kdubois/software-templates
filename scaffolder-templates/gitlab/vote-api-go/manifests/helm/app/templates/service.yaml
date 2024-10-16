@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "quarkus-template.fullname" . }}
+  name: ${{values.deployment_name}}
   labels:
     {{- include "quarkus-template.labels" . | nindent 4 }}
 spec:

@@ -21,9 +21,7 @@ image:
   tag: ${{values.image_tag}}
 
 env:
-  GRPC_HOST: ${{values.modelmesh_host}}
-  GRPC_PORT: ${{values.modelmesh_port}}
-  NUM_GEN: 1
+  REST_URL: ${{values.model_endpoint}}
 
 imagePullSecrets: []
 nameOverride: ""
@@ -53,7 +51,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 8081
+  port: 8080
   name: http
 
 route: 
@@ -72,11 +70,11 @@ route:
   #   memory: 128Mi
 resources:
   limits:
-    cpu: '6'
-    memory: 8Gi
+    cpu: '4'
+    memory: 4Gi
   requests:
-    cpu: '1'
-    memory: 2Gi
+    cpu: 500m
+    memory: 1Gi
 
 autoscaling:
   enabled: false

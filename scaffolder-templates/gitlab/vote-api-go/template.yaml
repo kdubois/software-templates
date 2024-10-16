@@ -35,7 +35,7 @@ spec:
           title: Cluster Id
           type: string
           description: Id of the cluster
-          default: .apps.cluster-r7v52.sandbox2992.opentlc.com
+          default: .apps.cluster-bjwf7.sandbox185.opentlc.com
     - title: Provide Image Registry Information
       required:
         - image_host
@@ -66,7 +66,7 @@ spec:
           namespace: vote-app-dev-${{ user.entity.metadata.name }}
           owner: ${{ user.entity.metadata.name }}
           cluster: ${{ parameters.cluster_id }}
-          host: gitlab-gitlab.apps.cluster-r7v52.sandbox2992.opentlc.com
+          host: gitlab-gitlab.apps.cluster-bjwf7.sandbox185.opentlc.com
           destination: ${{ user.entity.metadata.name }}/${{ parameters.component_id }}
           quay_destination: ${{ parameters.image_organization}}/${{ parameters.component_id }}
           port: 9000
@@ -76,7 +76,7 @@ spec:
       name: Publish
       action: publish:gitlab
       input:
-        repoUrl: "gitlab-gitlab.apps.cluster-r7v52.sandbox2992.opentlc.com?owner=${{ user.entity.metadata.name }}&repo=${{parameters.component_id}}"
+        repoUrl: "gitlab-gitlab.apps.cluster-bjwf7.sandbox185.opentlc.com?owner=${{ user.entity.metadata.name }}&repo=${{parameters.component_id}}"
         repoVisibility: public
 
     - id: register
@@ -95,8 +95,8 @@ spec:
         values:
           component_id: ${{ parameters.component_id }}-${{ user.entity.metadata.name }}
           description: ${{ parameters.description }}
-          destination: https://gitlab-gitlab.apps.cluster-r7v52.sandbox2992.opentlc.com/${{ user.entity.metadata.name }}/${{parameters.component_id}}-gitops.git
-          source_repository: https://gitlab-gitlab.apps.cluster-r7v52.sandbox2992.opentlc.com/${{ user.entity.metadata.name }}/${{parameters.component_id}}.git
+          destination: https://gitlab-gitlab.apps.cluster-bjwf7.sandbox185.opentlc.com/${{ user.entity.metadata.name }}/${{parameters.component_id}}-gitops.git
+          source_repository: https://gitlab-gitlab.apps.cluster-bjwf7.sandbox185.opentlc.com/${{ user.entity.metadata.name }}/${{parameters.component_id}}.git
           repository_name: ${{parameters.component_id}}
           git_owner: ${{ user.entity.metadata.name }}
           cluster: ${{ parameters.cluster_id }}
@@ -107,7 +107,7 @@ spec:
           image_name: ${{ parameters.component_id }}
           image_tag: ${{ parameters.image_tag }}
           port: 9000
-          repository_host: gitlab-gitlab.apps.cluster-r7v52.sandbox2992.opentlc.com
+          repository_host: gitlab-gitlab.apps.cluster-bjwf7.sandbox185.opentlc.com
           deployment_name: vote-api
           user: ${{ user.entity.metadata.name }}
         targetPath: ./tenant-gitops
@@ -116,7 +116,7 @@ spec:
       name: Publishing to Resource Repository
       action: publish:gitlab
       input:
-        repoUrl: "gitlab-gitlab.apps.cluster-r7v52.sandbox2992.opentlc.com?owner=${{ user.entity.metadata.name }}&repo=${{parameters.component_id}}-gitops"
+        repoUrl: "gitlab-gitlab.apps.cluster-bjwf7.sandbox185.opentlc.com?owner=${{ user.entity.metadata.name }}&repo=${{parameters.component_id}}-gitops"
         title: gitops resources for ${{ parameters.component_id }}
         description: gitops resources for ${{ parameters.component_id }}
         sourcePath: ./tenant-gitops
@@ -129,7 +129,7 @@ spec:
         appName: ${{ parameters.component_id }}-${{ user.entity.metadata.name }}-bootstrap
         argoInstance: main
         namespace: janus-argocd
-        repoUrl: https://gitlab-gitlab.apps.cluster-r7v52.sandbox2992.opentlc.com/${{ user.entity.metadata.name }}/${{ parameters.component_id }}-gitops.git
+        repoUrl: https://gitlab-gitlab.apps.cluster-bjwf7.sandbox185.opentlc.com/${{ user.entity.metadata.name }}/${{ parameters.component_id }}-gitops.git
         path: 'argocd/'
 
   output:

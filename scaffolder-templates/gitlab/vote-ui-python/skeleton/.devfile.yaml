@@ -7,7 +7,7 @@ components:
       image: quay.io/devfile/universal-developer-image:ubi8-latest
       env:
         - name: VOTING_API_SERVICE_HOST
-          value: vote-api
+          value: vote-api.${{values.namespace}}.svc.cluster.local
         - name: VOTING_API_SERVICE_PORT
           value: '9000'
       cpuRequest: '30m'
@@ -17,6 +17,8 @@ components:
       endpoints:
         - name: vote-ui
           targetPort: 8080
+          secure: false
+          protocol: https
 commands:
   - id: run-python-app
     exec:

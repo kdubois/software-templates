@@ -1,14 +1,6 @@
-Flask
+Flask[async]
 gunicorn
-numpy
-grpcio
-grpcio-tools
-accelerate
-diffusers
-protobuf
-torch
-torchvision
-transformers
+requests
 pillow
 boto3
 botocore

@@ -16,7 +16,7 @@ spec:
     targetPort: {{ $.Values.service.port }}
   to:
     kind: Service
-    name: {{ include "quarkus-template.fullname" $ }}
+    name: ${{values.deployment_name}}
   tls:
     termination: edge
   wildcardPolicy: None

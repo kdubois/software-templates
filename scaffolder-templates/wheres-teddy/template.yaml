@@ -30,8 +30,8 @@ spec:
       required:
         - cluster_id
         - namespace
-        - modelmesh_host
-        - modelmesh_port
+        - model_endpoint
+        - model_path
         - owner
       properties:
         cluster_id:
@@ -43,16 +43,16 @@ spec:
           title: Namespace
           type: string
           description: Namespace
-        modelmesh_host:
-          title: GRPC host of the inference API
+        model_endpoint:
+          title: REST endpoint for the inference API
           type: string
-          description: GRPC host of the inference API, default is internal networking (K8S service)
-          default: modelmesh-serving.text-to-image
-        modelmesh_port:
-          title: GRPC port of the inference API
-          type: number
-          description: GRPC port of the inference API, default is internal networking
-          default: 8033
+          description: REST endpoint for the inference API
+          default: https://redhat-dog-image-generation.apps.wearedevs.rl97.p1.openshiftapps.com
+        model_path:
+          title: REST endpoint path for the inference API
+          type: string
+          description: REST endpoint path for the inference API
+          default: /v1/models/model:predict
         owner:
           title: Owner
           type: string
@@ -90,8 +90,8 @@ spec:
           cluster_id: ${{parameters.cluster_id}}
           namespace: ${{parameters.namespace}}
           component_id: ${{parameters.namespace}}-wheres-teddy-app
-          modelmesh_host: ${{parameters.modelmesh_host}}
-          modelmesh_port: ${{parameters.modelmesh_port}}
+          model_endpoint: ${{parameters.model_endpoint}}
+          model_url: ${{parameters.model_endpoint}}/${{parameters.model_path}}
     - id: publishSource
       name: Publishing to Source Code Repository
       action: publish:github
@@ -128,8 +128,8 @@ spec:
           image_host: ${{parameters.image_host}}
           image_name: ${{parameters.namespace}}/wheres-teddy-app
           image_tag: ${{parameters.image_tag}}
-          modelmesh_host: ${{parameters.modelmesh_host}}
-          modelmesh_port: ${{parameters.modelmesh_port}}
+          model_endpoint: ${{parameters.model_endpoint}}
+          model_url: ${{parameters.model_endpoint}}/${{parameters.model_path}}
         targetPath: ./tenant-gitops
     - id: publishGitops
       name: Publishing to Deployment Resource Repository

@@ -1,0 +1,89 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: wheres-teddy
+  labels:
+    app: wheres-teddy
+    app.kubernetes.io/component: wheres-teddy
+    app.kubernetes.io/instance: wheres-teddy
+    app.kubernetes.io/name: wheres-teddy
+    app.kubernetes.io/part-of: wheres-teddy
+    app.openshift.io/runtime: python
+    app.openshift.io/runtime-namespace: wheres-teddy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wheres-teddy
+  template:
+    metadata:
+      labels:
+        app: wheres-teddy
+        deployment: wheres-teddy
+      annotations:
+        openshift.io/generated-by: OpenShiftWebConsole
+    spec:
+      containers:
+        - name: wheres-teddy
+          image: 'quay.io/cfchase/wheres-teddy:latest'
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: REST_URL
+              value: <KSERVE_ENDPOINT>
+          resources:
+            limits:
+              cpu: '4'
+              memory: 4Gi
+            requests:
+              cpu: 500m
+              memory: 1Gi
+          imagePullPolicy: Always
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: wheres-teddy
+  labels:
+    app: wheres-teddy
+    app.kubernetes.io/component: wheres-teddy
+    app.kubernetes.io/instance: wheres-teddy
+    app.kubernetes.io/name: wheres-teddy
+    app.kubernetes.io/part-of: wheres-teddy
+    app.openshift.io/runtime-version: latest
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: wheres-teddy
+    deployment: wheres-teddy
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: wheres-teddy
+  labels:
+    app: wheres-teddy
+    app.kubernetes.io/component: wheres-teddy
+    app.kubernetes.io/instance: wheres-teddy
+    app.kubernetes.io/name: wheres-teddy
+    app.kubernetes.io/part-of: wheres-teddy
+    app.openshift.io/runtime-version: latest
+  annotations:
+    openshift.io/host.generated: 'true'
+spec:
+  to:
+    kind: Service
+    name: wheres-teddy
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

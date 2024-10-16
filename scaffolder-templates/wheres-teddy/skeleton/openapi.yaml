@@ -4,12 +4,10 @@ info:
   title: Red Hat Teddy API Model
   version: 1.0
 servers:
-- url: http://modelmesh-serving.text-to-image.svc:8008
-  description: Auto generated value
-- url: http://modelmesh-serving.text-to-image.svc:8008
+- url: https://redhat-dog-image-generation.apps.wearedevs.rl97.p1.openshiftapps.com
   description: Auto generated value
 paths:
-  v2/models/rps/infer:
+  /v1/models/model:predict:
     post:
       description: API Inference
       requestBody:
@@ -21,7 +19,7 @@ paths:
               required:
                 - data
               properties:
-                voter_id:
+                prompt:
                   type: string
       responses:
         '200':

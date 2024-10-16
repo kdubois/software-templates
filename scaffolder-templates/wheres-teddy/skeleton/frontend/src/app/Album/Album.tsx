@@ -5,7 +5,7 @@ import {
   GalleryItem,
   PageSection,
   Progress,
-  ProgressSize,
+  Spinner,
   Stack,
   StackItem,
   TextContent,
@@ -109,7 +109,11 @@ const Album: React.FunctionComponent = () => {
         .replace(/\b[a-z]/g, function (letter) {
           return letter.toUpperCase();
         });
-      itemContent = <Progress value={g.progress} title={title} />;
+      if (!g.progress) {
+        itemContent = <Spinner/>;
+      } else {
+        itemContent = <Progress value={g.progress} title={title}/>;
+      }
     }
     return <GalleryItem key={`gallery-item-${index}`}>{itemContent}</GalleryItem>;
   };
